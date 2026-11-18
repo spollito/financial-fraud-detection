@@ -10,9 +10,16 @@
 - [x] Configure a GitHub Actions workflow for linting, tests and a synthetic CLI run.
 - [ ] Acquire the labeled IEEE-CIS CSV files and review actual training-partition EDA.
 
+## Phase 2
+
+- [x] Add local PySpark ingestion, quality reporting and partitioned Parquet.
+- [x] Add seven-day, strictly prior proxy features and integrate with the logistic baseline.
+- [x] Add Spark integration tests and an Ubuntu Spark CI job configuration.
+- [ ] Validate the optional S3A path against an authorized bucket.
+- [ ] Run the pipeline on the real IEEE-CIS training files.
+
 ## Later phases
 
-- [ ] Phase 2. Add PySpark local ingestion, partitioned Parquet, S3 support, and history features.
 - [ ] Phase 3. Add temporal Optuna studies, XGBoost, PyTorch, calibration, temporal confidence
   intervals, and comparative held-out metrics after model selection.
 - [ ] Phase 4. Add SHAP, model card generation, MLflow tracking, registry and promotion criteria.

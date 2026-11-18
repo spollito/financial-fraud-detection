@@ -62,7 +62,7 @@ def _deduplicate(frame: pd.DataFrame, label: str) -> tuple[pd.DataFrame, int]:
     return unique, len(frame) - len(unique)
 
 
-def _sha256(path: Path) -> str:
+def file_sha256(path: Path) -> str:
     with path.open("rb") as handle:
         return hashlib.file_digest(handle, "sha256").hexdigest()
 
@@ -102,7 +102,9 @@ def load_dataset(raw_dir: Path) -> tuple[pd.DataFrame, dict]:
         "orphan_identity_rows": int((~identity[ID].isin(transaction[ID])).sum()),
         "transactions_without_identity": int(joined[IDENTITY_MISSING].sum()),
         "schema": {key: str(value) for key, value in joined.dtypes.items()},
-        "input_sha256": {path.name: _sha256(path) for path in (transaction_path, identity_path)},
+        "input_sha256": {
+            path.name: file_sha256(path) for path in (transaction_path, identity_path)
+        },
         "processing_seconds": time.perf_counter() - start,
     }
     return joined, quality

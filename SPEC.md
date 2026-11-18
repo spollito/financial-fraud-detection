@@ -27,12 +27,17 @@ chronological evaluation.
 5. The training stage selects a threshold on validation and writes a probability model with
    a JSON run report. Train and validation must contain both classes. The test partition requires
    both classes when enabled. Test data never participates in fitting or threshold selection.
+6. PySpark implements the selected CSV schema plus card-proxy inputs and writes model-ready
+   Parquet by temporal split with a quality manifest. A strict seven-day event-time window
+   calculates historical count and relative amount. Missing proxy rows receive no history.
+   The raw proxy values are dropped from processed data. Processed training adds these
+   features to the regularized logistic baseline and uses the same validation protocol.
 
 ## Planned architecture
 
 | Stage | Acceptance criteria |
 | --- | --- |
-| Spark ingestion and feature pipeline | Run in local PySpark; validate and left join the full declared schema; produce partitioned Parquet and quality/timing reports; optionally read/write S3. Share a feature contract with training. Prove historical features use strictly earlier timestamps and document the limitations of entity proxies. |
+| S3 validation and live history parity | Verify the optional S3A path in an authorized environment. Implement a point-in-time serving source with the same tie, lookback and cold-start semantics. |
 | Comparative training | Compare logistic regression, XGBoost with early stopping, and a configurable PyTorch MLP with weighted loss, batching, checkpoints, early stopping, and CPU/GPU support. Tune with Optuna on expanding temporal windows. Freeze candidates, calibration and thresholds before scoring the final holdout. Report AP, fixed-recall false-positive reduction, simulated cost, and temporal uncertainty where practical. |
 | Explainability and tracking | Store configuration, dataset hashes, seeds, runtimes, model versions and reports in MLflow. Document validation-gated registration and promotion. Generate SHAP global and individual explanations, FP/FN examples, and a model card explaining limitations. |
 | Inference and optimization | Serve validated single/batch predictions and health, readiness and model-info endpoints in FastAPI. Make historical-feature supply explicit and avoid logging transaction values. Compare native PyTorch, ONNX Runtime and compatible quantized ONNX with common warm-up, hardware, inputs and quality tolerances. |

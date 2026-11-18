@@ -22,6 +22,8 @@ def write_fixture(output: Path, *, rows: int = 720, seed: int = 42) -> None:
             TARGET: label,
             AMOUNT: np.round(rng.lognormal(3.5 + 0.6 * label, 0.9), 2),
             "ProductCD": rng.choice(["W", "C", "H"], rows),
+            "card1": 1000 + index % 12,
+            "card2": 200 + index % 4,
             "card4": rng.choice(["visa", "mastercard"], rows),
             "card6": rng.choice(["debit", "credit"], rows),
             "P_emaildomain": rng.choice(["example.com", "example.net", None], rows),

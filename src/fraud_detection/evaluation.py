@@ -13,6 +13,26 @@ from sklearn.metrics import (
 
 from .ingestion import ID, TARGET, TIME
 
+SPLIT = "split"
+PARTITIONS = ("train", "validation", "test")
+
+
+def assigned_partitions(frame: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
+    if (
+        frame[SPLIT].isna().any()
+        or set(frame[SPLIT]) != set(PARTITIONS)
+        or frame[[ID, TIME, TARGET]].isna().any().any()
+        or not frame[ID].is_unique
+        or not frame[TARGET].isin((0, 1)).all()
+    ):
+        raise ValueError("Processed data has invalid partition membership, keys, or labels")
+    train, validation, test = (
+        frame.loc[frame[SPLIT].eq(name)].sort_values([TIME, ID]) for name in PARTITIONS
+    )
+    if train[TIME].max() >= validation[TIME].min() or validation[TIME].max() >= test[TIME].min():
+        raise ValueError("Processed data partitions overlap in transaction time")
+    return train, validation, test
+
 
 def temporal_split(
     frame: pd.DataFrame, train_fraction: float = 0.6, validation_fraction: float = 0.2

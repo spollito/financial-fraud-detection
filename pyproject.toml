@@ -16,6 +16,7 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = ["pytest==8.4.2", "ruff==0.13.3"]
+spark = ["pyspark==4.0.1", "pyarrow==22.0.0"]
 
 [project.scripts]
 fraud = "fraud_detection.cli:main"

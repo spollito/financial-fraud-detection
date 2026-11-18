@@ -8,8 +8,21 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import FunctionTransformer, OneHotEncoder, StandardScaler
 
-from .evaluation import require_both_classes, score_partition, select_threshold, temporal_split
-from .features import CATEGORICAL, NUMERICAL, RAW_FEATURES, make_features
+from .evaluation import (
+    assigned_partitions,
+    require_both_classes,
+    score_partition,
+    select_threshold,
+    temporal_split,
+)
+from .features import (
+    CATEGORICAL,
+    HISTORY_FIELDS,
+    HISTORY_NUMERICAL,
+    NUMERICAL,
+    RAW_FEATURES,
+    make_features,
+)
 from .ingestion import TARGET, TIME
 
 
@@ -22,9 +35,14 @@ def train_baseline(
     max_fpr: float,
     review_cost: float,
     missed_fraud_cost: float,
+    use_history: bool = False,
 ) -> tuple[Pipeline, dict]:
     start = time.perf_counter()
-    train, validation, test = temporal_split(frame, train_fraction, validation_fraction)
+    train, validation, test = (
+        assigned_partitions(frame)
+        if use_history
+        else temporal_split(frame, train_fraction, validation_fraction)
+    )
     require_both_classes(train, "Train")
     require_both_classes(validation, "Validation")
     splits = {"train": train, "validation": validation, "test": test}
@@ -45,16 +63,18 @@ def train_baseline(
             "class_weight": "balanced",
             "solver": "lbfgs",
             "max_iter": 1000,
+            "uses_history": use_history,
         },
     }
+    numerical = (*NUMERICAL, *HISTORY_NUMERICAL) if use_history else NUMERICAL
     model = Pipeline(
         [
-            ("features", FunctionTransformer(make_features, validate=False)),
+            ("features", FunctionTransformer(make_features, kw_args={"use_history": use_history})),
             (
                 "encode",
                 ColumnTransformer(
                     [
-                        ("numeric", StandardScaler(), list(NUMERICAL)),
+                        ("numeric", StandardScaler(), list(numerical)),
                         ("categorical", OneHotEncoder(handle_unknown="ignore"), list(CATEGORICAL)),
                     ]
                 ),
@@ -62,7 +82,8 @@ def train_baseline(
             ("classifier", LogisticRegression(C=1.0, class_weight="balanced", max_iter=1000)),
         ]
     )
-    raw_features = list(RAW_FEATURES)
+    raw_features = list((*RAW_FEATURES, *HISTORY_FIELDS) if use_history else RAW_FEATURES)
+    report["raw_features"] = raw_features
     fit_start = time.perf_counter()
     model.fit(train[raw_features], train[TARGET])
     report["fit_seconds"] = time.perf_counter() - fit_start
