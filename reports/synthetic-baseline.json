@@ -1,0 +1,276 @@
+{
+  "dataset": "synthetic",
+  "synthetic_only": true,
+  "quality": {
+    "rows": 720,
+    "raw_transaction_rows": 720,
+    "raw_identity_rows": 480,
+    "transaction_duplicates_removed": 0,
+    "identity_duplicates_removed": 0,
+    "orphan_identity_rows": 0,
+    "transactions_without_identity": 240,
+    "schema": {
+      "TransactionID": "int64",
+      "TransactionDT": "int64",
+      "isFraud": "int64",
+      "TransactionAmt": "float64",
+      "ProductCD": "object",
+      "card4": "object",
+      "card6": "object",
+      "P_emaildomain": "object",
+      "R_emaildomain": "object",
+      "DeviceType": "object",
+      "identity_missing": "int8"
+    },
+    "input_sha256": {
+      "train_transaction.csv": "12f39968b24a08cdd92ee7eeefded9cd69c356c10827f51a590be695848d4545",
+      "train_identity.csv": "dd181c1ad2f12e8c4036d58000e325444c51afbd3c3f8c023825c7d11c28f647"
+    },
+    "processing_seconds": 0.019187400001101196
+  },
+  "requested_split_fractions": {
+    "train": 0.6,
+    "validation": 0.2
+  },
+  "versions": {
+    "python": "3.13.7",
+    "financial-fraud-detection": "0.1.0",
+    "numpy": "2.2.6",
+    "pandas": "2.3.3",
+    "scikit-learn": "1.7.2",
+    "scipy": "1.16.3",
+    "joblib": "1.5.2"
+  },
+  "partitions": {
+    "train": {
+      "rows": 432,
+      "min_transaction_dt": 0,
+      "max_transaction_dt": 1548000
+    },
+    "validation": {
+      "rows": 144,
+      "min_transaction_dt": 1555200,
+      "max_transaction_dt": 2066400
+    },
+    "test": {
+      "rows": 144,
+      "min_transaction_dt": 2073600,
+      "max_transaction_dt": 2584800
+    }
+  },
+  "threshold_selection": "maximize validation F1, preferring the higher threshold on ties",
+  "primary_metric": "sklearn.metrics.average_precision_score",
+  "model": {
+    "family": "logistic_regression",
+    "C": 1.0,
+    "class_weight": "balanced",
+    "solver": "lbfgs",
+    "max_iter": 1000
+  },
+  "fit_seconds": 0.010885700001381338,
+  "threshold": 0.3569448553165004,
+  "validation": {
+    "average_precision": 0.06275462348401276,
+    "roc_auc": 0.5091911764705882,
+    "brier_score": 0.24805965042196082,
+    "precision": 0.07042253521126761,
+    "recall": 0.625,
+    "f1": 0.12658227848101267,
+    "false_positive_rate": 0.4852941176470588,
+    "confusion_matrix": {
+      "tn": 70,
+      "fp": 66,
+      "fn": 3,
+      "tp": 5
+    },
+    "calibration_bins": [
+      {
+        "lower": 0.0,
+        "upper": 0.1,
+        "count": 18,
+        "mean_probability": 0.06372279840926158,
+        "fraud_rate": 0.0
+      },
+      {
+        "lower": 0.1,
+        "upper": 0.2,
+        "count": 20,
+        "mean_probability": 0.14648459158486507,
+        "fraud_rate": 0.1
+      },
+      {
+        "lower": 0.2,
+        "upper": 0.3,
+        "count": 27,
+        "mean_probability": 0.24653767434230284,
+        "fraud_rate": 0.037037037037037035
+      },
+      {
+        "lower": 0.3,
+        "upper": 0.4,
+        "count": 17,
+        "mean_probability": 0.35387478619493046,
+        "fraud_rate": 0.058823529411764705
+      },
+      {
+        "lower": 0.4,
+        "upper": 0.5,
+        "count": 11,
+        "mean_probability": 0.4515193365486283,
+        "fraud_rate": 0.09090909090909091
+      },
+      {
+        "lower": 0.5,
+        "upper": 0.6,
+        "count": 11,
+        "mean_probability": 0.5435930632059243,
+        "fraud_rate": 0.09090909090909091
+      },
+      {
+        "lower": 0.6,
+        "upper": 0.7,
+        "count": 10,
+        "mean_probability": 0.6436042249535682,
+        "fraud_rate": 0.1
+      },
+      {
+        "lower": 0.7,
+        "upper": 0.8,
+        "count": 11,
+        "mean_probability": 0.7560239369198922,
+        "fraud_rate": 0.0
+      },
+      {
+        "lower": 0.8,
+        "upper": 0.9,
+        "count": 15,
+        "mean_probability": 0.8416871286613584,
+        "fraud_rate": 0.06666666666666667
+      },
+      {
+        "lower": 0.9,
+        "upper": 1.0,
+        "count": 4,
+        "mean_probability": 0.9117203909275626,
+        "fraud_rate": 0.0
+      }
+    ],
+    "roc_recall_at_max_fpr": {
+      "max_fpr": 0.01,
+      "recall": 0.0
+    },
+    "simulated_cost": {
+      "false_positive_review_cost": 5.0,
+      "missed_fraud_cost": 250.0,
+      "total": 1080.0
+    }
+  },
+  "test": {
+    "average_precision": 0.16855672962254206,
+    "roc_auc": 0.5860271115745568,
+    "brier_score": 0.21303347023124758,
+    "precision": 0.05405405405405406,
+    "recall": 0.5714285714285714,
+    "f1": 0.09876543209876543,
+    "false_positive_rate": 0.5109489051094891,
+    "confusion_matrix": {
+      "tn": 67,
+      "fp": 70,
+      "fn": 3,
+      "tp": 4
+    },
+    "calibration_bins": [
+      {
+        "lower": 0.0,
+        "upper": 0.1,
+        "count": 20,
+        "mean_probability": 0.06233944203891495,
+        "fraud_rate": 0.05
+      },
+      {
+        "lower": 0.1,
+        "upper": 0.2,
+        "count": 17,
+        "mean_probability": 0.16123253915198812,
+        "fraud_rate": 0.0
+      },
+      {
+        "lower": 0.2,
+        "upper": 0.3,
+        "count": 24,
+        "mean_probability": 0.2449744037763556,
+        "fraud_rate": 0.08333333333333333
+      },
+      {
+        "lower": 0.3,
+        "upper": 0.4,
+        "count": 20,
+        "mean_probability": 0.35996401043777937,
+        "fraud_rate": 0.0
+      },
+      {
+        "lower": 0.4,
+        "upper": 0.5,
+        "count": 17,
+        "mean_probability": 0.4501525770163759,
+        "fraud_rate": 0.0
+      },
+      {
+        "lower": 0.5,
+        "upper": 0.6,
+        "count": 17,
+        "mean_probability": 0.5487848643139359,
+        "fraud_rate": 0.11764705882352941
+      },
+      {
+        "lower": 0.6,
+        "upper": 0.7,
+        "count": 7,
+        "mean_probability": 0.6562346010320571,
+        "fraud_rate": 0.0
+      },
+      {
+        "lower": 0.7,
+        "upper": 0.8,
+        "count": 12,
+        "mean_probability": 0.7419020071603192,
+        "fraud_rate": 0.0
+      },
+      {
+        "lower": 0.8,
+        "upper": 0.9,
+        "count": 8,
+        "mean_probability": 0.8606872507352208,
+        "fraud_rate": 0.125
+      },
+      {
+        "lower": 0.9,
+        "upper": 1.0,
+        "count": 2,
+        "mean_probability": 0.9012172478207404,
+        "fraud_rate": 0.5
+      }
+    ],
+    "roc_recall_at_max_fpr": {
+      "max_fpr": 0.01,
+      "recall": 0.14285714285714285
+    },
+    "simulated_cost": {
+      "false_positive_review_cost": 5.0,
+      "missed_fraud_cost": 250.0,
+      "total": 1100.0
+    }
+  },
+  "total_seconds": 0.024759499996434897,
+  "raw_features": [
+    "TransactionAmt",
+    "identity_missing",
+    "ProductCD",
+    "card4",
+    "card6",
+    "P_emaildomain",
+    "R_emaildomain",
+    "DeviceType"
+  ],
+  "artifact_bytes": 2021
+}

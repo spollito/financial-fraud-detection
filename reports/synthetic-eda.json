@@ -1,0 +1,252 @@
+{
+  "dataset": "synthetic",
+  "synthetic_only": true,
+  "quality": {
+    "rows": 720,
+    "raw_transaction_rows": 720,
+    "raw_identity_rows": 480,
+    "transaction_duplicates_removed": 0,
+    "identity_duplicates_removed": 0,
+    "orphan_identity_rows": 0,
+    "transactions_without_identity": 240,
+    "schema": {
+      "TransactionID": "int64",
+      "TransactionDT": "int64",
+      "isFraud": "int64",
+      "TransactionAmt": "float64",
+      "ProductCD": "object",
+      "card4": "object",
+      "card6": "object",
+      "P_emaildomain": "object",
+      "R_emaildomain": "object",
+      "DeviceType": "object",
+      "identity_missing": "int8"
+    },
+    "input_sha256": {
+      "train_transaction.csv": "12f39968b24a08cdd92ee7eeefded9cd69c356c10827f51a590be695848d4545",
+      "train_identity.csv": "dd181c1ad2f12e8c4036d58000e325444c51afbd3c3f8c023825c7d11c28f647"
+    },
+    "processing_seconds": 0.028724800002237316
+  },
+  "requested_split_fractions": {
+    "train": 0.6,
+    "validation": 0.2
+  },
+  "versions": {
+    "python": "3.13.7",
+    "financial-fraud-detection": "0.1.0",
+    "numpy": "2.2.6",
+    "pandas": "2.3.3",
+    "scikit-learn": "1.7.2",
+    "scipy": "1.16.3",
+    "joblib": "1.5.2"
+  },
+  "scope": "oldest partition only",
+  "max_transaction_dt": 1548000,
+  "class_distribution": {
+    "rows": 432,
+    "fraud_rows": 23,
+    "fraud_rate": 0.05324074074074074,
+    "wilson_95": [
+      0.03573595169922987,
+      0.07862090401512974
+    ]
+  },
+  "missing_rates": {
+    "TransactionID": 0.0,
+    "TransactionDT": 0.0,
+    "isFraud": 0.0,
+    "TransactionAmt": 0.0,
+    "ProductCD": 0.0,
+    "card4": 0.0,
+    "card6": 0.0,
+    "P_emaildomain": 0.3125,
+    "R_emaildomain": 0.46064814814814814,
+    "DeviceType": 0.5509259259259259,
+    "identity_missing": 0.0
+  },
+  "transactions_without_identity": 144,
+  "amount": {
+    "all": {
+      "mean": 49.617013888888884,
+      "std": 53.97050176493698,
+      "quantiles": {
+        "0.01": 4.8117,
+        "0.25": 18.235,
+        "0.5": 34.760000000000005,
+        "0.75": 59.097500000000004,
+        "0.95": 140.9895,
+        "0.99": 279.8209
+      }
+    },
+    "fraud": {
+      "mean": 84.09434782608695,
+      "std": 79.47160678785998,
+      "quantiles": {
+        "0.01": 14.0388,
+        "0.25": 40.275,
+        "0.5": 57.69,
+        "0.75": 82.28999999999999,
+        "0.95": 279.3639999999999,
+        "0.99": 308.48120000000006
+      }
+    },
+    "legitimate": {
+      "mean": 47.67819070904645,
+      "std": 51.48638900681602,
+      "quantiles": {
+        "0.01": 4.7956,
+        "0.25": 17.94,
+        "0.5": 33.46,
+        "0.75": 57.65,
+        "0.95": 138.85799999999992,
+        "0.99": 227.37760000000006
+      }
+    },
+    "upper_iqr_fence": 120.39125000000001,
+    "above_upper_fence": 33
+  },
+  "fraud_rates_by_category": {
+    "ProductCD": [
+      {
+        "category": "C",
+        "rows": 141,
+        "fraud_rows": 10,
+        "fraud_rate": 0.07092198581560284,
+        "wilson_95": [
+          0.03897663408844457,
+          0.12562719560791719
+        ]
+      },
+      {
+        "category": "H",
+        "rows": 134,
+        "fraud_rows": 6,
+        "fraud_rate": 0.04477611940298507,
+        "wilson_95": [
+          0.020680488853388614,
+          0.09424472273553466
+        ]
+      },
+      {
+        "category": "W",
+        "rows": 157,
+        "fraud_rows": 7,
+        "fraud_rate": 0.044585987261146494,
+        "wilson_95": [
+          0.021762749846156178,
+          0.08916299623641175
+        ]
+      }
+    ],
+    "DeviceType": [
+      {
+        "category": "desktop",
+        "rows": 90,
+        "fraud_rows": 8,
+        "fraud_rate": 0.08888888888888889,
+        "wilson_95": [
+          0.045730492536794475,
+          0.16570546626054086
+        ]
+      },
+      {
+        "category": "mobile",
+        "rows": 104,
+        "fraud_rows": 4,
+        "fraud_rate": 0.038461538461538464,
+        "wilson_95": [
+          0.015056813343976884,
+          0.09474751376905566
+        ]
+      },
+      {
+        "category": null,
+        "rows": 238,
+        "fraud_rows": 11,
+        "fraud_rate": 0.046218487394957986,
+        "wilson_95": [
+          0.02600077329591406,
+          0.0808521168028571
+        ]
+      }
+    ]
+  },
+  "relative_weeks": [
+    {
+      "week": 0,
+      "median_amount": 33.055,
+      "rows": 168,
+      "fraud_rows": 9,
+      "fraud_rate": 0.05357142857142857,
+      "wilson_95": [
+        0.02843692682778745,
+        0.09866545562745188
+      ]
+    },
+    {
+      "week": 1,
+      "median_amount": 33.58,
+      "rows": 168,
+      "fraud_rows": 9,
+      "fraud_rate": 0.05357142857142857,
+      "wilson_95": [
+        0.02843692682778745,
+        0.09866545562745188
+      ]
+    },
+    {
+      "week": 2,
+      "median_amount": 40.215,
+      "rows": 96,
+      "fraud_rows": 5,
+      "fraud_rate": 0.052083333333333336,
+      "wilson_95": [
+        0.02244960047424143,
+        0.11618478031492638
+      ]
+    }
+  ],
+  "spearman_correlation": {
+    "TransactionAmt": {
+      "TransactionAmt": 1.0,
+      "TransactionDT": 0.026260828238686054,
+      "identity_missing": 0.01827042677235018,
+      "isFraud": 0.15911112439489536
+    },
+    "TransactionDT": {
+      "TransactionAmt": 0.026260828238686054,
+      "TransactionDT": 1.0,
+      "identity_missing": -0.0056701759114311245,
+      "isFraud": -0.01231890842658299
+    },
+    "identity_missing": {
+      "TransactionAmt": 0.01827042677235018,
+      "TransactionDT": -0.0056701759114311245,
+      "identity_missing": 1.0,
+      "isFraud": 0.00729053551897957
+    },
+    "isFraud": {
+      "TransactionAmt": 0.15911112439489536,
+      "TransactionDT": -0.01231890842658299,
+      "identity_missing": 0.00729053551897957,
+      "isFraud": 1.0
+    }
+  },
+  "amount_comparison": {
+    "mann_whitney_u": 6628.0,
+    "asymptotic_p_value": 0.0009586995191077915,
+    "rank_biserial_fraud_vs_legitimate": 0.40916338896566384,
+    "interpretation": "Exploratory independence approximation; transactions may cluster."
+  },
+  "leakage_review": {
+    "excluded_fields": [
+      "TransactionID",
+      "TransactionDT",
+      "isFraud"
+    ],
+    "timestamp_ties_cross_boundaries": false,
+    "identity_availability": "Assumed present at transaction time; verify before serving.",
+    "preprocessing_fit": "Training partition only"
+  }
+}
